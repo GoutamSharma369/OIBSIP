@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Temperature Converter</title>
+    <style>
+        body {
+            background-image: url('background-image.jpg');
+            background-size: cover;
+            font-family: Arial, sans-serif;
+            color: #fff;
+        }
+        
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: rgba(252, 39, 39, 0.5);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        h1 {
+            font-size: 40px;
+            margin-bottom: 20px;
+        }
+        
+        input {
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            margin-right: 10px;
+            width: 200px;
+        }
+        
+        select {
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            margin-right: 10px;
+            width: 120px;
+        }
+        
+        .btn-pink {
+            background-color: #4f57ee;
+            width: fit-content;
+            color: white;
+            padding: 0.8rem 2.3rem;
+            box-shadow: 5px 5px 7px 0px #c117173f;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.5s;
+            font-weight: 500;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .btn-pink::before {
+            content: "";
+            position: absolute;
+            background-color: #f50e0e;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: -1;
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: all 0.8s;
+        }
+        
+        .btn-pink:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .btn-pink:hover {
+            color: #fff;
+        }
+        
+        p {
+            font-size: 30px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Temperature Converter</h1>
+        <label for="temperature-input">Temperature:</label>
+        <input type="number" id="temperature-input" required>
+        <select id="unit-select">
+			<option value="Celsius">Celsius</option>
+			<option value="Fahrenheit">Fahrenheit</option>
+			<option value="Kelvin">Kelvin</option>
+		</select>
+        <br>
+        <button class="btn-pink" id="btn-top">Convert</button>
+        <p id="result"></p>
+    </div>
+
+    <script>
+        const convertBtn = document.getElementById('btn-top');
+        convertBtn.addEventListener('click', () => {
+            const temperatureInput = document.getElementById('temperature-input');
+            const unitSelect = document.getElementById('unit-select');
+            const resultDisplay = document.getElementById('result');
+            const temperature = parseFloat(temperatureInput.value);
+            const unitFrom = unitSelect.value;
+
+            if (!isNaN(temperature)) {
+                let convertedTemperature, unitTo;
+
+                if (unitFrom === 'Celsius') {
+                    convertedTemperature = temperature * 9 / 5 + 32;
+                    unitTo = 'Fahrenheit';
+                } else if (unitFrom === 'Fahrenheit') {
+                    convertedTemperature = (temperature - 32) * 5 / 9;
+                    unitTo = 'Celsius';
+                } else if (unitFrom === 'Kelvin') {
+                    convertedTemperature = temperature - 273.15;
+                    unitTo = 'Celsius';
+                }
+
+                resultDisplay.innerHTML = `${convertedTemperature.toFixed(2)} ${unitTo}`;
+            } else {
+                alert('Please enter a valid temperature.');
+            }
+        });
+    </script>
+</body>
